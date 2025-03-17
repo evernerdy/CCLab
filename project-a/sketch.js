@@ -263,19 +263,20 @@ function building(H, area) {
 
     stroke(c, b, a, 200);
     fill(c, b, a, 3);
-    rect(area + noiseValueBB, 150 + i, 0.08 * i, 50);
-    text("爱", area + noiseValueBB, 150 + i);
+    rect(area + noiseValueBB, 220 + i, 0.08 * i, 50);
+    text("爱", area + noiseValueBB, 220 + i);
 
-    rect(area + 1.3 * noiseValueBB, 300 + i, 0.08 * i, 50);
+    rect(area + 1.3 * noiseValueBB, 330 + i, 0.08 * i, 50);
     
     //backtower
     
   stroke(c, b, a, 100);
     fill(c, b, a, 3);
-    rect(area+80 + 0.8*noiseValueBB, 150+area/3 + i, 0.08 * i, 50);
-    text("爱", area+80 + 0.8*noiseValueBB, 150+area/3 + i);
+    rect(area+80 + 0.8*noiseValueBB, 180+area + i, 0.08 * i, 50);
+    text("爱", area+80 + 0.8*noiseValueBB, 180+area/3 + i);
 
-    rect(area+80 + noiseValueBB, 300+area/3 + i, 0.08 * i, 50);
+    rect(area+80 + noiseValueBB, 330+area/3 + i, 0.08 * i, 50);
   }
   pop();
 }
+
