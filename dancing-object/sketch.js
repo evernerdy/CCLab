@@ -18,11 +18,11 @@ class eversdancer
       this.x = startX;
       this.y = startY;
       this.scaleFactor = 2;
-      this.dance = false;
       
     }
     update()
     {
+      let dance = false;
       let movement = 2*sin(0.01*frameCount);
       if (movement>= 1.8 || movement <= -1.8)
         {
