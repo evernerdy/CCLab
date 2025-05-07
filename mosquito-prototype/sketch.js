@@ -6,6 +6,7 @@ let worldY = 0;
 let scaleM = 0.5;
 let startGame = 0;
 let blood;
+let soundRate = 1;
 let chapter1 = false;
 let transition1 = 0;
 let chapter2 = false;
@@ -16,9 +17,16 @@ let stars = [];
 let transition2=0;
 
 //chapter3
+let endSoundPlay = false;
 let num = 4;
 let particles = [];
 let eyesNum;
+
+function preload()
+{
+  bgSound = loadSound ("assets/mosquitoSound.wav");
+  endSound = loadSound ("assets/distorted.wav");
+}
 function setup() {
     let canvas = createCanvas(800, 500);
   canvas.parent("p5-canvas-container");
@@ -52,6 +60,8 @@ function draw() {
   if (chapter1 == true)
     {
       push();
+      bgSound.rate(soundRate);
+  soundRate = map (Mosquitos.length, 0, 510, 3, 0.3);
   blood = 255-0.5*Mosquitos.length;
   background(255, 255-blood, 255-blood, 255-blood);
   strokeWeight(1);
@@ -129,6 +139,7 @@ if (keyIsDown(83)) { // S
   if (chapter2 == true)
     {
       background(0 , 10);
+    soundRate = 30;
 
   transition2 += 1;
  stroke("green");
@@ -162,6 +173,12 @@ if (keyIsDown(83)) { // S
   if (chapter3 == true)
     {
       push();
+      if (endSoundPlay == false)
+      {
+      endSound.loop();
+      }
+      endSoundPlay == true;
+      bgSound.stop();
       background(100, 3);
    for (let i=0; i< num; i++)
     {
@@ -241,7 +258,7 @@ class Mosquito {
     if (this.alive == false) {
         this.speedM = 0;
         this.colorM = "red";
-        let speedFall = 4;
+        let speedFall = 6;
         this.posY += speedFall;
       }
   }
@@ -331,7 +348,7 @@ class particle
       this.d = random (0, 100);
       this.weight = 3;
       this.canvas = true;
-      this.rotateP = 0.07*frameCount;
+      this.rotateP = 0.07*frameCount + random (0, 2*PI);
       this.speedC = -100;
     }
     update()
@@ -376,5 +393,9 @@ class particle
 
 function mousePressed()
 {
+  if (startGame == false)
+  {
+    bgSound.loop();
+  }
   startGame = true;
 }
