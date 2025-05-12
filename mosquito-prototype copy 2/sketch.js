@@ -399,7 +399,6 @@ if (keyIsDown(83)) { // S
     let tx = constrain(shake1 - mouseX, -150, 250);
     let ty = constrain(shake2 - mouseY, -50, 50);
     translate(tx, ty);
-    console.log(mouseX, mouseY);
 shake1 = random (-50, 50);
 shake2 = random (-50, 50);
     tint(255, 15);
