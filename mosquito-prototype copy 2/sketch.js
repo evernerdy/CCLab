@@ -60,8 +60,8 @@ let endSoundPlay = false;
 
 function preload()
 {
-  bgSound = loadSound ("assets/mosquitoSound.wav");
-  endSound = loadSound ("assets/distorted.wav");
+  bgSound = loadSound ("assets/mosquitoSound.mp3");
+  endSound = loadSound ("assets/distorted.mp3");
   videoStreet = createVideo(['assets/street.mp4']);
   videoSize = (2000, 1200);
   videoStreet.hide();

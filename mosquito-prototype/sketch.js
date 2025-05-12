@@ -1,79 +1,219 @@
+//chapter0
+let titleX = 0;
+let titleY = 0;
+let noiseBeginX;
+let noiseBeginY;
+let penTrans0 = 255;
+let titleGone = false;
+
+//prologue
+let prologue = false;
+let penTrans = 0;
+let penGone = false;
+let penTrans1 = 0;
+let penGone1 = false;
+let penTrans2 = 0;
+let penGone2 = false;
+let penTrans3 = 0;
+let penGone3 = false;
+let penTrans4 = 0;
+let penGone4 = false;
+
+//chapter1
 let Mosquitos = [];
 let worldWidth = 2000;
 let worldHeight = 1200;
 let worldX = 300;
 let worldY = 0;
 let scaleM = 0.5;
-let startGame = 0;
+let startGame = false;
 let blood;
 let soundRate = 1;
 let chapter1 = false;
 let transition1 = 0;
 let chapter2 = false;
 let chapter3 = false;
+let killMosquitoes = [];
+
+//monologue
+transitionA=0;
+transitionB=0;
+transitionC=0;
+transitionD=0;
 
 //chapter2
 let stars = [];
 let transition2=0;
 
 //chapter3
-let endSoundPlay = false;
 let num = 4;
 let particles = [];
 let eyesNum;
+let shake1=0;
+let shake2=0;
+let endGame = 0;
+
+//sound control
+let bgSoundPlay = false;
+let endSoundPlay = false;
 
 function preload()
 {
   bgSound = loadSound ("assets/mosquitoSound.wav");
   endSound = loadSound ("assets/distorted.wav");
+  videoStreet = createVideo(['assets/street.mp4']);
+  videoSize = (2000, 1200);
+  videoStreet.hide();
+  videoStreet.loop();
 }
 function setup() {
     let canvas = createCanvas(800, 500);
   canvas.parent("p5-canvas-container");
   for (let i = 0; i < 510; i++) {
     Mosquitos[i] = new Mosquito();
+  
   }
 }
 
 function draw() {
+  if (titleGone == true)
+  {
+    penTrans0 -= 2;
+  }
+  if (penTrans0 <= 0)
+  {
+    startGame = true;
+  }
+
   if (startGame == false)
     {
       push();
-      background(255, 100);
+      background(255);
       textAlign(CENTER, CENTER);
       textSize(80);
-      strokeWeight(10);
-      stroke(0);
-      text ("MOSQUITO", 400, 250);
-      strokeWeight(5);
-      let textS = sin(0.05*frameCount);
-      let textC = map (textS, -1, 1, 30, 40);
-      textSize (textC);
-      text ("CLICK TO START", 400, 350);
+      noStroke();
+      fill(0, penTrans0);
+      text ("MOSQUITO", titleX, titleY);
+      noiseBeginX = noise(0.03*frameCount);
+      noiseBeginY = noise(0.03*frameCount+10000);
+      titleX = map (noiseBeginX, 0, 1, 0, 800);
+      titleY = map (noiseBeginY, 0, 1, 0, 500);
+      
       pop();
     }
-  if (startGame == true && chapter2 == false &&chapter3 == false)
+  
+
+  if (startGame == true && chapter1 == false &&chapter2 == false &&chapter3 == false)
     {
-      chapter1 = true;
+      prologue = true;
     }
+  if (prologue == true)
+  {
+    background (0, 5);
+    textSize(20);
+    noStroke();
+    fill(255, penTrans);
+    textAlign (CENTER, CENTER);
+    text ("I'm the one", 400, 250);
+    if (penTrans >= 255)
+    {
+      penGone = true;
+    }
+    if (penGone == true && penTrans >= -255)
+    {
+      penTrans -=4;
+    }
+    if (penGone == false)
+    {
+      penTrans +=4;
+    }
+    if (penTrans <-255)
+    {
+      fill (255, penTrans1)
+      text ("I'm the one who brings the world peace", 400, 250);
+      if (penTrans1 >= 255)
+      {
+        penGone1 = true;
+      }
+      if (penGone1 == true && penTrans1 >= -255)
+      {
+        penTrans1 -=4;
+      }
+      if (penGone1 == false)
+      {
+        penTrans1 +=4;
+      }
+      if(penTrans1 <-255)
+      {
+        fill (255, penTrans2)
+        text("A world with no mosquito", 400, 250);
+        if (penTrans2 >= 255)
+        {
+          penGone2 = true;
+        }
+        if (penGone2 == true && penTrans2 >= -255)
+        {
+          penTrans2 -=4;
+        }
+        if (penGone2 == false)
+        {
+          penTrans2 +=4;
+        }
+        if(penTrans2 <-255)
+          {
+            fill (255, 0, 0, penTrans3);
+            textSize(80);
+            text("I HATE MOSQUITOES", 400, 250);
+            if (penTrans3 >= 255)
+            {
+              penGone3 = true;
+            }
+            if (penGone3 == true && penTrans3 >= 0)
+            {
+              penTrans3 -=4;
+            }
+            if (penGone3 == false)
+            {
+              penTrans3 +=4;
+
+      }
+    }
+    }
+
+
+  }
+}
+if (penTrans3 < 0)
+  {
+    prologue = false;
+    chapter1 = true;
+  }
+
   //chapter1
   if (chapter1 == true)
     {
       push();
       bgSound.rate(soundRate);
-  soundRate = map (Mosquitos.length, 0, 510, 3, 0.3);
+  if (bgSoundPlay == false)
+  {
+    bgSound.loop();
+    bgSoundPlay = true;
+  }
+  soundRate = map (Mosquitos.length, 0, 510, 1.5, 0.3);
   blood = 255-0.5*Mosquitos.length;
   background(255, 255-blood, 255-blood, 255-blood);
   strokeWeight(1);
   stroke(0);
-  text(Mosquitos.length, 20, 20);
+  fill (0);
+  textSize(20);
+  // text("Patience: ", 60, 20);
+  // text (Mosquitos.length, 120, 20);
 
   push();
   translate(-mouseX + worldX, -mouseY + worldY);
   scale(scaleM);
 
   rectMode(CORNER);
-  backgroundM();
   rectMode(CENTER);
 
   // Corrected mouse
@@ -85,6 +225,7 @@ function draw() {
     Mosquitos[i].checkOffCanvas();
     Mosquitos[i].display();
   }
+  
 
   pop(); // end world transformations
 
@@ -92,6 +233,15 @@ function draw() {
   for (let i = Mosquitos.length - 1; i >= 0; i--) {
     if (Mosquitos[i].offCanvas == true) {
       Mosquitos.splice(i, 1);
+    }
+  }
+
+  for (let i = killMosquitoes.length - 1; i >= 0; i--) {
+    killMosquitoes[i].update();
+    killMosquitoes[i].display();
+
+    if (killMosquitoes[i].y > 2000) {
+      killMosquitoes.splice(i, 1);
     }
   }
     
@@ -128,17 +278,60 @@ if (keyIsDown(83)) { // S
       worldY = random (-100, 100);
       transition1+=1;
     }
+  
+    if (transition1 <800)
+    {
   if(transition1 >= 200)
     {
+      fill(255, 0, 0);
+      rect (0, 0, 2000, 1200);
+      fill(0);
+      textSize(50);
+      text("HAHA!DIEEEE!YOU ******!!!! ", 400, 250)
+    }
+    if(transition1 >= 300)
+      {
+        fill(255, 0, 0);
+        rect (0, 0, 2000, 1200);
+        fill(0);
+        textSize(40);
+        text("WHY THE SOUND KEEP GOING??????? ", 400, 200)
+        text ("WHY IS IT STILL SO ANNOYING??????", 400, 300)
+      }
+      if(transition1 >= 400)
+        {
+          fill(255, 0, 0);
+          rect (0, 0, 2000, 1200);
+          fill(0);
+          textSize(40);
+          text("WHAT THE ..@!0&^^^^^^^Zzzzzzzzzzt!", 400, 250)
+        }
+        if(transition1 >= 600)
+          {
+            fill(255, 0, 0);
+            rect (0, 0, 2000, 1200);
+            fill(0);
+            textSize(100);
+            for (let i=0; i<500; i++)
+            {
+            text ("BzzzzzzzBzzzzzzzzzz", 400, 50*i);
+            }
+
+          }
+        }
+        if (transition1 >= 800)
+        {
+
       chapter1 = false;
       chapter2 = true;
     }
-      console.log (chapter1);
       pop();
 }
+
+
   if (chapter2 == true)
     {
-      background(0 , 10);
+      background(0, 10);
     soundRate = 30;
 
   transition2 += 1;
@@ -173,11 +366,12 @@ if (keyIsDown(83)) { // S
   if (chapter3 == true)
     {
       push();
+      background (0, 10);
       if (endSoundPlay == false)
       {
       endSound.loop();
+      endSoundPlay = true;
       }
-      endSoundPlay == true;
       bgSound.stop();
       background(100, 3);
    for (let i=0; i< num; i++)
@@ -201,9 +395,68 @@ if (keyIsDown(83)) { // S
       particles.splice (i, 1);
     }
     }
-      
-      pop();
-    }
+
+    let tx = constrain(shake1 - mouseX, -150, 250);
+    let ty = constrain(shake2 - mouseY, -50, 50);
+    translate(tx, ty);
+    console.log(mouseX, mouseY);
+shake1 = random (-50, 50);
+shake2 = random (-50, 50);
+    tint(255, 15);
+  image (videoStreet, -200, 0); 
+
+
+// fill (0, endGame);
+// rect(0, 0, 800, 500);
+// if (endGame<=10)
+// {
+// endGame+=0.03;
+// }
+// if (endGame>=10)
+// {
+//   endGame += 2;
+// }
+
+
+
+//   //reset everything
+//   if (endGame >= 355)
+//   {
+// for (let i = 0; i < 510; i++) {
+//   Mosquitos[i] = new Mosquito();
+// }
+// bgSoundPlay == false
+// worldWidth = 2000;
+// worldHeight = 1200;
+// worldX = 300;
+// worldY = 0;
+// scaleM = 0.5;
+// startGame = false;
+// blood;
+// soundRate = 1;
+// chapter1 = false;
+// transition1 = 0;
+// chapter2 = false;
+// chapter3 = false;
+
+// //chapter2
+// stars = [];
+// transition2=0;
+
+// //chapter3
+// endSoundPlay = false;
+// num = 4;
+// particles = [];
+// eyesNum;
+// shake1=0;
+// shake2=0;
+// endGame = 0;
+
+// endSound.stop();
+//   }
+//       pop();
+   }
+
 }
 
 
@@ -285,14 +538,7 @@ class Mosquito {
   }
 }
 
-// Background 
-function backgroundM() {
-  push();
-  fill(0);
-  noStroke();
-  rect(-800, worldHeight - 200, 4000, 2000);
-  pop();
-}
+
 //chapter2 stars
 class Star{
   constructor(){
@@ -313,8 +559,8 @@ class Star{
     scale(this.s)
 
     //noStroke();
-    fill (255);
-    stroke(255);
+    fill (255,0,0);
+    stroke(255,0,0);
     textSize(10);
     line (0, 100, 0, 200);
     text ("MOSQUITO", 0, 200);
@@ -333,7 +579,7 @@ class particle
       this.x = 400;
       this.y = 0;
       this.size = 0.4;
-      this.darkness = random (0, 100);
+      this.darkness = random (50, 60);
       
       //speed
       this.speedx;
@@ -346,15 +592,14 @@ class particle
       this.b = random (0, 100);
       this.c = random (0, 100);
       this.d = random (0, 100);
-      this.weight = 3;
+      this.weight = 1;
       this.canvas = true;
-      this.rotateP = 0.07*frameCount + random (0, 2*PI);
+      this.rotateP = 0.07*frameCount+random(0, 2*PI);
       this.speedC = -100;
     }
     update()
     {
       this.speedC += 1;
-      this.weight -= 0.01;
       this.noiseSpeed += 0.1;
       this.noiseValue = noise (this.noiseSpeed+this.randomNoise);
       this.speedy = map (this.noiseValue, 0, 1, -5, 5);
@@ -379,23 +624,59 @@ class particle
       strokeWeight (this.weight);
       stroke (0, this.darkness);
       line (0, 0, this.a, this.b);
-      stroke (255, 255-this.darkness);
+      stroke (255, this.darkness);
       line (0, 0, this.c, this.d);
-      let rBlue = random();
-      if (rBlue >= 0.99)
-        {
-          stroke ("blue");
-          line (0, 0, this.a, this.b);
-        }
       pop();
     }
   }
+
 
 function mousePressed()
 {
   if (startGame == false)
   {
-    bgSound.loop();
+   // bgSound.loop();
+    titleGone = true;
   }
-  startGame = true;
+
+  if (chapter1 == true)
+  {
+    let km = new killM(550 - Mosquitos.length);
+    killMosquitoes.push(km);
+  }
+  
+}
+
+class killM 
+{
+  constructor(textS)
+  {
+    this.x = random (200, 600);
+    this.y = 0;
+    this.size = random (0, textS);
+    this.a = random();
+  }
+  update()
+  {
+    this.y += 10;
+  }
+  display()
+  {
+    push();
+    noStroke();
+    fill(255, 0, 0);
+    textSize(0.5*this.size);
+    if (this.a<=1/3)
+    {
+      text("DIEEEEEEE", this.x, this.y);
+    }
+    if (this.a>1/3 && this.a <= 2/3)
+    {
+      text ("ANNNNOOOOOYYYYYYYIIIIINNNNGGGG", this.x, this.y);
+    }
+    if (this.a > 2/3)
+    {
+      text("I HATE YOUUUUUUUUUU", this.x, this.y);
+    }
+    }
 }
