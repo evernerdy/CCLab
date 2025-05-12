@@ -52,6 +52,7 @@ let eyesNum;
 let shake1=0;
 let shake2=0;
 let endGame = 0;
+let videoPlay = false;
 
 //sound control
 let bgSoundPlay = false;
@@ -65,7 +66,6 @@ function preload()
   videoSize = (2000, 1200);
   videoStreet.hide();
   videoStreet.volume(0); 
-  videoStreet.autoplay(true);
   videoStreet.loop();
   const videoElement = document.querySelector('video');
 videoStreet.muted = true;
@@ -407,7 +407,10 @@ if (keyIsDown(83)) { // S
 shake1 = random (-50, 50);
 shake2 = random (-50, 50);
     tint(255, 15);
+  if(videoPlay == true)
+  {
   image (videoStreet, -200, 0); 
+  }
 
 
 // fill (0, endGame);
@@ -647,6 +650,11 @@ function mousePressed()
   {
     let km = new killM(550 - Mosquitos.length);
     killMosquitoes.push(km);
+  }
+
+  if (chapter3 == true)
+  {
+   videoPlay = true;
   }
   
 }
