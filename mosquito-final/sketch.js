@@ -67,9 +67,6 @@ function preload()
   videoStreet.hide();
   videoStreet.volume(0); 
   videoStreet.loop();
-  const videoElement = document.querySelector('video');
-videoStreet.muted = true;
-videoStreet.play();
 }
 function setup() {
     let canvas = createCanvas(800, 500);
