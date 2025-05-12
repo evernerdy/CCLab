@@ -64,6 +64,8 @@ function preload()
   videoStreet = createVideo(['assets/street.mp4']);
   videoSize = (2000, 1200);
   videoStreet.hide();
+  videoStreet.volume(0); 
+  videoStreet.autoplay(true);
   videoStreet.loop();
 }
 function setup() {
@@ -397,7 +399,7 @@ if (keyIsDown(83)) { // S
     }
 
     let tx = constrain(shake1 - mouseX, -150, 250);
-    let ty = constrain(shake2 - mouseY, -50, 50);
+    let ty = constrain(shake2 - mouseY, -80, 80);
     translate(tx, ty);
 shake1 = random (-50, 50);
 shake2 = random (-50, 50);

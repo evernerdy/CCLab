@@ -4,11 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>CCLab Project</title>
-
   <link rel="stylesheet" type="text/css" href="style.css">
-
   <script src="lib/p5.js"></script>
   <script src="lib/p5.sound.js"></script>
 </head>
@@ -16,17 +13,13 @@
 <body>
 
   <div class="main-wrapper">
-    
-
-    <!-- the following div will contain the p5 canvas. -->
     <div id="p5-canvas-container">
-      <!-- p5 canvas will be appended here. -->
+      <video id="videoStreet" autoplay muted playsinline>
+        <source src="video.mp4" type="video/mp4" />
+      </video>
     </div>
-
-    
   </div>
 
-  <!-- the script tag below should always be at the bottom, right before the closing body tag -->
   <script src="sketch.js"></script>
 </body>
 
